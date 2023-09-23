@@ -103,11 +103,15 @@ public:
     uart_fmt sendMyHidData();
     uart_fmt readMyHidData();
     uart_fmt getRaraCFG();
-    uart_fmt setRaraCfg();
+    uart_fmt setRaraCFG();
     uart_fmt getUsbString();
     uart_fmt setUsbString();
     uart_fmt setDefaultCfg();
     uart_fmt reset();
+
+    void pressASCII( uint8_t key );
+    void releaseAll();
+    void sendString(char * string , uint8_t len );
 };
 
 
