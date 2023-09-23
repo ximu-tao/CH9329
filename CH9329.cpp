@@ -224,10 +224,14 @@ void CH9329::pressASCII(uint8_t k) {
 }
 
 void CH9329::releaseAll() {
-
+    uint8_t data[8] = { 0 };
+    this->sendKbGeneralData( data );
 }
 
 void CH9329::sendString(char *string, uint8_t len){
-
+    for (int i = 0; i < len; ++i) {
+        this->pressASCII( string[i] );
+        this->releaseAll();
+    }
 }
 
