@@ -83,7 +83,7 @@ typedef struct uart_fmt{
 	char ADDR; // 地址码：占 1 个字节，默认为 0x00，可接收任意地址码的命令包，如果芯片地址设置成 0x01---0xFE，则只能接收对应地址码或地址码为 0xFF 的命令包。0xFF 为广播包，芯片不需 要进行应答；
 	char CMD; // 命令码：占 1 个字节，外围串口设备发起的帧的命令码有效范围为：0x01---0x3F，CH9329 芯片发送正常应答包时的命令码为：原命令码 | 0x80；CH9329 芯片发送异常应答包时的命 令码为：原命令码 | 0xC0；
 	char LEN; // 后续数据长度：占 1 个字节，主要用于记录该包实际后续数据的长度，仅包含后续数据部分，不包括帧头字节、地址码、命令码和累加和字节；
-	char* DATA; // 后续数据：占 N 个字节，N 有效范围为 0---64。typedef
+	char DATA[64]; // 后续数据：占 N 个字节，N 有效范围为 0---64。typedef
 	char SUM; // 累加和：占 1 个字节，计算方式为： SUM = HEAD+ADDR+CMD+LEN+DATA
 }UART_FMT;
 
@@ -92,10 +92,11 @@ private:
     HardwareSerial * _serial;
     uint8_t _addr;
     void writeHeadAddr();
+    uart_fmt readUart();
 public:
-    CH9329( HardwareSerial * serial , uint32_t _baud , uint8_t addr );
+    CH9329(  HardwareSerial *serial , uint32_t _baud  = 9600, uint8_t addr = 0x00);
     uart_fmt getInfo();
-    uart_fmt sendKbGeneralData();
+    uart_fmt sendKbGeneralData( uint8_t * key );
     uart_fmt sendKbMediaData();
     uart_fmt sendMsAbsData();
     uart_fmt sendMsRelData();
