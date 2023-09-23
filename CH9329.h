@@ -91,7 +91,7 @@ class CH9329 {
 private:
     HardwareSerial * _serial;
     uint8_t _addr;
-    void writeHeadAddr();
+    void writeUart( uart_fmt * data );
     uart_fmt readUart();
 public:
     CH9329(  HardwareSerial *serial , uint32_t _baud  = 9600, uint8_t addr = 0x00);
