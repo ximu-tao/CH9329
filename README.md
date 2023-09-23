@@ -6,7 +6,7 @@ USB HID Keyboard using WCH's CH9329 chip.
 
 =========中文版==========
 
-在Arduino上使用CH9328 USB转HID键盘芯片.
+在Arduino上使用CH9329 USB转HID键盘芯片.
 
 🚧 未完成的项目
 
