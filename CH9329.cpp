@@ -212,8 +212,8 @@ void CH9329::pressASCII(uint8_t k) {
         if (!k) {
             return ;
         }
-        if (k & 0x80) {                            // it's a capital letter or other character reached with shift
-            data[0] &= ~(0x02);    // the left shift modifier
+        if (k & SHIFT) {                            // it's a capital letter or other character reached with shift
+            data[0] = 0x02;    // the left shift modifier
             k &= 0x7F;
         }
     }
@@ -229,9 +229,23 @@ void CH9329::releaseAll() {
 }
 
 void CH9329::sendString(char *string, uint8_t len){
+    uart_fmt hostInfo = getInfo();
+    uint8_t hostCapsLock = hostInfo.DATA[3] & 0x02;
+
+    if ( hostCapsLock ){
+        this->pressASCII( 0x39 );
+        this->releaseAll();
+    }
+
     for (int i = 0; i < len; ++i) {
         this->pressASCII( string[i] );
         this->releaseAll();
     }
+
+    if ( hostCapsLock ){
+        this->pressASCII( 0x39 );
+        this->releaseAll();
+    }
+
 }
 
