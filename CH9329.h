@@ -93,8 +93,6 @@ private:
     uint8_t _addr;
     void writeUart( uart_fmt * data );
     uart_fmt readUart();
-public:
-    CH9329(  HardwareSerial *serial , uint32_t _baud  = 9600, uint8_t addr = 0x00);
     uart_fmt getInfo();
     uart_fmt sendKbGeneralData( uint8_t * key );
     uart_fmt sendKbMediaData();
@@ -109,6 +107,8 @@ public:
     uart_fmt setDefaultCfg();
     uart_fmt reset();
 
+public:
+    CH9329(  HardwareSerial *serial , uint32_t _baud  = 9600, uint8_t addr = 0x00);
     void pressASCII( uint8_t key );
     void releaseAll();
     void sendString(char * string , uint8_t len );
