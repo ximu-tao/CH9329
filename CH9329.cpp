@@ -29,10 +29,25 @@ uart_fmt CH9329::sendKbGeneralData( uint8_t * key ) {
 
 }
 
-void CH9329::writeHeadAddr() {
-    this->_serial->write( 0x57 );
-    this->_serial->write( 0xAB );
-    this->_serial->write( this->_addr );
+void CH9329::writeUart(uart_fmt *data) {
+    data->HEAD[0] = 0x57;
+    data->HEAD[1] = 0xAB;
+    data->ADDR = this->_addr;
+
+    data->SUM = data->HEAD[0] + data->HEAD[1] + this->_addr + data->CMD + data->LEN;
+
+    _serial->write( data->HEAD[0] );
+    _serial->write( data->HEAD[1] );
+    _serial->write( data->ADDR );
+    _serial->write( data->CMD );
+    _serial->write( data->LEN );
+
+    for (int i = 0; i < data->LEN; ++i) {
+        data->SUM += data->DATA[i];
+        _serial->write( data->DATA[i] );
+    }
+
+    _serial->write( data->SUM & 0xFF );
 }
 
 uart_fmt CH9329::readUart() {
