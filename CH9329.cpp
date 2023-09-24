@@ -258,14 +258,14 @@ bool CH9329::isUSBConnected() {
 }
 
 bool CH9329::isCapsLock() {
-    return cmdGetInfo().DATA[3] & 0x02;;
+    return cmdGetInfo().DATA[2] & 0x02;
 }
 
 bool CH9329::isNumLock() {
-    return cmdGetInfo().DATA[3] & 0x01;
+    return cmdGetInfo().DATA[2] & 0x01;
 }
 
 bool CH9329::isScrollLock() {
-    return cmdGetInfo().DATA[3] & 0x04;
+    return cmdGetInfo().DATA[2] & 0x04;
 }
 
