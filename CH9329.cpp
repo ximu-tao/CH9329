@@ -249,3 +249,23 @@ void CH9329::sendString(char *string, uint8_t len){
 
 }
 
+uint8_t CH9329::getChipVer() {
+    return getInfo().DATA[0];
+}
+
+bool CH9329::isUSBConnected() {
+    return getInfo().DATA[1];
+}
+
+bool CH9329::isCapsLock() {
+    return getInfo().DATA[3] & 0x02;;
+}
+
+bool CH9329::isNumLock() {
+    return getInfo().DATA[3] & 0x01;
+}
+
+bool CH9329::isScrollLock() {
+    return getInfo().DATA[3] & 0x04;
+}
+

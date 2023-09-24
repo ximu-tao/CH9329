@@ -78,6 +78,13 @@ enum control_key {
 };
 
 
+enum chip_ver {
+    V1_0 = 0x30,
+    V1_1 = 0x31
+};
+
+
+
 typedef struct uart_fmt{
 	char HEAD[2]; // 帧头：占 2 个字节，固定为 0x57、0xAB
 	char ADDR; // 地址码：占 1 个字节，默认为 0x00，可接收任意地址码的命令包，如果芯片地址设置成 0x01---0xFE，则只能接收对应地址码或地址码为 0xFF 的命令包。0xFF 为广播包，芯片不需 要进行应答；
@@ -112,6 +119,14 @@ public:
     void pressASCII( uint8_t key );
     void releaseAll();
     void sendString(char * string , uint8_t len );
+
+    uint8_t getChipVer();
+    bool isUSBConnected();
+    bool isCapsLock();
+    bool isNumLock();
+    bool isScrollLock();
+
+
 };
 
 
