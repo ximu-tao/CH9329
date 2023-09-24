@@ -143,7 +143,7 @@ CH9329::CH9329(  HardwareSerial * serial, uint32_t baud , uint8_t addr ) {
     _serial->begin(baud);
 }
 
-uart_fmt CH9329::getInfo() {
+uart_fmt CH9329::cmdGetInfo() {
     uart_fmt data{};
     data.CMD = CMD_GET_INFO;
     data.LEN = 0;
@@ -157,7 +157,7 @@ uart_fmt CH9329::getInfo() {
  * @param uint8_t key[8]： Length must be 8
  * @return
  */
-uart_fmt CH9329::sendKbGeneralData(uint8_t *key) {
+uart_fmt CH9329::cmdSendKbGeneralData(uint8_t *key) {
     uart_fmt data{};
     data.CMD = CMD_SEND_KB_GENERAL_DATA;
     data.LEN = 0x08;
@@ -219,17 +219,17 @@ void CH9329::pressASCII(uint8_t k) {
     }
 
     data[2] = k;
-    this->sendKbGeneralData( data );
+    this->cmdSendKbGeneralData(data);
     return;
 }
 
 void CH9329::releaseAll() {
     uint8_t data[8] = { 0 };
-    this->sendKbGeneralData( data );
+    this->cmdSendKbGeneralData(data);
 }
 
 void CH9329::sendString(char *string, uint8_t len){
-    uart_fmt hostInfo = getInfo();
+    uart_fmt hostInfo = cmdGetInfo();
     uint8_t hostCapsLock = hostInfo.DATA[3] & 0x02;
 
     if ( hostCapsLock ){
@@ -250,22 +250,22 @@ void CH9329::sendString(char *string, uint8_t len){
 }
 
 uint8_t CH9329::getChipVer() {
-    return getInfo().DATA[0];
+    return cmdGetInfo().DATA[0];
 }
 
 bool CH9329::isUSBConnected() {
-    return getInfo().DATA[1];
+    return cmdGetInfo().DATA[1];
 }
 
 bool CH9329::isCapsLock() {
-    return getInfo().DATA[3] & 0x02;;
+    return cmdGetInfo().DATA[3] & 0x02;;
 }
 
 bool CH9329::isNumLock() {
-    return getInfo().DATA[3] & 0x01;
+    return cmdGetInfo().DATA[3] & 0x01;
 }
 
 bool CH9329::isScrollLock() {
-    return getInfo().DATA[3] & 0x04;
+    return cmdGetInfo().DATA[3] & 0x04;
 }
 

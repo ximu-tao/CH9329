@@ -100,19 +100,19 @@ private:
     uint8_t _addr;
     void writeUart( uart_fmt * data );
     uart_fmt readUart();
-    uart_fmt getInfo();
-    uart_fmt sendKbGeneralData( uint8_t * key );
-    uart_fmt sendKbMediaData();
-    uart_fmt sendMsAbsData();
-    uart_fmt sendMsRelData();
-    uart_fmt sendMyHidData();
-    uart_fmt readMyHidData();
-    uart_fmt getRaraCFG();
-    uart_fmt setRaraCFG();
-    uart_fmt getUsbString();
-    uart_fmt setUsbString();
-    uart_fmt setDefaultCfg();
-    uart_fmt reset();
+    uart_fmt cmdGetInfo();
+    uart_fmt cmdSendKbGeneralData(uint8_t * key );
+    uart_fmt cmdSendKbMediaData();
+    uart_fmt cmdSendMsAbsData();
+    uart_fmt cmdSendMsRelData();
+    uart_fmt cmdSendMyHidData();
+    uart_fmt cmdReadMyHidData();
+    uart_fmt cmdGetRaraCFG();
+    uart_fmt cmdSetRaraCFG();
+    uart_fmt cmdGetUsbString();
+    uart_fmt cmdSetUsbString();
+    uart_fmt cmdSetDefaultCfg();
+    uart_fmt cmdReset();
 
 public:
     CH9329(  HardwareSerial *serial , uint32_t _baud  = 9600, uint8_t addr = 0x00);
