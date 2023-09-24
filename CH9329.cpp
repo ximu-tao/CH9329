@@ -191,6 +191,15 @@ void CH9329::writeUart(uart_fmt *data) {
 
 uart_fmt CH9329::readUart() {
     uart_fmt info{};
+    for (int i = 0; i < 100; ++i) {
+        if (Serial.available()) {
+            break;
+        }
+        if ( i == 99 ){
+            return info;
+        }
+        delay(1);
+    }
     _serial->read( (byte *)&info , 5 );
     _serial->read( (byte *)&(info.DATA) , info.LEN );
     _serial->read( (byte *)&(info.SUM) , 1 );
