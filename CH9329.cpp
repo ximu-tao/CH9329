@@ -239,9 +239,9 @@ void CH9329::releaseAll() {
 void CH9329::sendString(char *string, uint8_t len){
 
     bool hostCapsLock = this->isCapsLock();
-
+    uint8_t switchCapsLock[] = { 0x00 , 0x00 , 0x39 , 0x00,  0x00 , 0x00, 0x00 , 0x00};
     if ( hostCapsLock ){
-        this->pressASCII( 0x39 );
+        this->cmdSendKbGeneralData( switchCapsLock );
         this->releaseAll();
     }
 
@@ -251,7 +251,7 @@ void CH9329::sendString(char *string, uint8_t len){
     }
 
     if ( hostCapsLock ){
-        this->pressASCII( 0x39 );
+        this->cmdSendKbGeneralData( switchCapsLock );
         this->releaseAll();
     }
 
