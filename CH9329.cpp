@@ -140,16 +140,14 @@ const uint8_t _asciimap[128] PROGMEM=
 
 CH9329::CH9329(  HardwareSerial * serial, uint32_t baud , uint8_t addr ) {
     this->_serial = serial;
+    this->_addr = addr;
     _serial->begin(baud);
 }
 
-uart_fmt CH9329::cmdGetInfo() {
-    uart_fmt data{};
-    data.CMD = CMD_GET_INFO;
-    data.LEN = 0;
-    this->writeUart(&data);
-
-    return this->readUart();
+uart_fmt * CH9329::cmdGetInfo( uart_fmt * info ) {
+    uint8_t getInfo[] = { 0x57 , 0xAB , 0x00 , 0x01 , 0x00 , 0x03 };
+    this->_serial->write( getInfo ,  6 );
+    return this->readUart( info );
 }
 
 /**
@@ -157,7 +155,7 @@ uart_fmt CH9329::cmdGetInfo() {
  * @param uint8_t key[8]： Length must be 8
  * @return
  */
-uart_fmt CH9329::cmdSendKbGeneralData(uint8_t *key) {
+void CH9329::cmdSendKbGeneralData(uint8_t *key) {
     uart_fmt data{};
     data.CMD = CMD_SEND_KB_GENERAL_DATA;
     data.LEN = 0x08;
@@ -165,7 +163,8 @@ uart_fmt CH9329::cmdSendKbGeneralData(uint8_t *key) {
         data.DATA[i] = key[i];
     }
     this->writeUart(&data);
-    return this->readUart();
+    this->readUart( &this->_lastUartData );
+    return ;
 }
 
 void CH9329::writeUart(uart_fmt *data) {
@@ -189,20 +188,20 @@ void CH9329::writeUart(uart_fmt *data) {
     _serial->write( data->SUM & 0xFF );
 }
 
-uart_fmt CH9329::readUart() {
-    uart_fmt info{};
-    for (int i = 0; i < 100; ++i) {
-        if (Serial.available()) {
+uart_fmt* CH9329::readUart( uart_fmt * info)  {
+    for (int i = 0; i < 200; ++i) {
+        if (this->_serial->available() ) {
             break;
         }
-        if ( i == 99 ){
+        if ( i == 199 ){
+            info->HEAD[0] = 0xEE;
             return info;
         }
         delay(1);
     }
-    _serial->read( (byte *)&info , 5 );
-    _serial->read( (byte *)&(info.DATA) , info.LEN );
-    _serial->read( (byte *)&(info.SUM) , 1 );
+    _serial->read( (byte *)info , 5 );
+    _serial->read( (byte *)&(info->DATA) , info->LEN );
+    _serial->read( (byte *)&(info->SUM) , 1 );
     return info;
 }
 
@@ -238,8 +237,8 @@ void CH9329::releaseAll() {
 }
 
 void CH9329::sendString(char *string, uint8_t len){
-    uart_fmt hostInfo = cmdGetInfo();
-    uint8_t hostCapsLock = hostInfo.DATA[3] & 0x02;
+
+    bool hostCapsLock = this->isCapsLock();
 
     if ( hostCapsLock ){
         this->pressASCII( 0x39 );
@@ -259,22 +258,22 @@ void CH9329::sendString(char *string, uint8_t len){
 }
 
 uint8_t CH9329::getChipVer() {
-    return cmdGetInfo().DATA[0];
+    return cmdGetInfo( &this->_lastUartData )->DATA[0];
 }
 
 bool CH9329::isUSBConnected() {
-    return cmdGetInfo().DATA[1];
+    return cmdGetInfo( &this->_lastUartData )->DATA[1];
 }
 
 bool CH9329::isCapsLock() {
-    return cmdGetInfo().DATA[2] & 0x02;
+    return cmdGetInfo( &this->_lastUartData )->DATA[2] & 0x02;
 }
 
 bool CH9329::isNumLock() {
-    return cmdGetInfo().DATA[2] & 0x01;
+    return cmdGetInfo( &this->_lastUartData )->DATA[2] & 0x01;
 }
 
 bool CH9329::isScrollLock() {
-    return cmdGetInfo().DATA[2] & 0x04;
+    return cmdGetInfo( &this->_lastUartData )->DATA[2] & 0x04;
 }
 

@@ -98,24 +98,25 @@ class CH9329 {
 private:
     HardwareSerial * _serial;
     uint8_t _addr;
+    uart_fmt _lastUartData{};
     void writeUart( uart_fmt * data );
-    uart_fmt readUart();
-    uart_fmt cmdGetInfo();
-    uart_fmt cmdSendKbGeneralData(uint8_t * key );
-    uart_fmt cmdSendKbMediaData();
-    uart_fmt cmdSendMsAbsData();
-    uart_fmt cmdSendMsRelData();
-    uart_fmt cmdSendMyHidData();
-    uart_fmt cmdReadMyHidData();
-    uart_fmt cmdGetRaraCFG();
+    uart_fmt * readUart( uart_fmt *  ) ;
+    void cmdSendKbGeneralData(uint8_t * key );
+    void cmdSendKbMediaData();
+    void cmdSendMsAbsData();
+    void cmdSendMsRelData();
+    void cmdSendMyHidData();
+    uart_fmt * cmdReadMyHidData(uart_fmt * );
+    uart_fmt * cmdGetRaraCFG(uart_fmt * );
     uart_fmt cmdSetRaraCFG();
     uart_fmt cmdGetUsbString();
     uart_fmt cmdSetUsbString();
     uart_fmt cmdSetDefaultCfg();
-    uart_fmt cmdReset();
+    void cmdReset();
 
 public:
     CH9329(  HardwareSerial *serial , uint32_t _baud  = 9600, uint8_t addr = 0x00);
+    uart_fmt * cmdGetInfo(uart_fmt * );
     void pressASCII( uint8_t key );
     void releaseAll();
     void sendString(char * string , uint8_t len );
