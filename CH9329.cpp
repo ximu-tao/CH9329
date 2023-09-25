@@ -206,8 +206,9 @@ uart_fmt* CH9329::readUart( uart_fmt * info)  {
 }
 
 
-void CH9329::pressASCII(uint8_t k) {
+void CH9329::pressASCII(uint8_t k , uint8_t control) {
     uint8_t data[8] = { 0 };
+    data[0] = control;
     if (k >= 136) {            // it's a non-printing key (not a modifier)
         return;
     }
@@ -221,7 +222,7 @@ void CH9329::pressASCII(uint8_t k) {
             return ;
         }
         if (k & SHIFT) {                            // it's a capital letter or other character reached with shift
-            data[0] = 0x02;    // the left shift modifier
+            data[0] ^= 0x02;    // the left shift modifier
             k &= 0x7F;
         }
     }

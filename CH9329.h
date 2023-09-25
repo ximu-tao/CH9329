@@ -71,10 +71,12 @@ enum control_key {
     KEY_LEFT_SHIFT = 0x02,
     KEY_LEFT_ALT = 0x04,
     KEY_LEFT_GUI = 0x08,
+    KEY_LEFT_WIN = 0x08,
     KEY_RIGHT_CTRL = 0x10,
     KEY_RIGHT_SHIFT = 0x20,
     KEY_RIGHT_ALT = 0x40,
-    KEY_RIGHT_GUI = 0x80
+    KEY_RIGHT_GUI = 0x80,
+    KEY_RIGHT_WIN = 0x80
 };
 
 
@@ -117,7 +119,7 @@ private:
 public:
     CH9329(  HardwareSerial *serial , uint32_t _baud  = 9600, uint8_t addr = 0x00);
     uart_fmt * cmdGetInfo(uart_fmt * );
-    void pressASCII( uint8_t key );
+    void pressASCII( uint8_t key , uint8_t control = 0 );
     void releaseAll();
     void sendString(char * string , uint8_t len );
 
