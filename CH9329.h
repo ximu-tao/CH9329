@@ -156,6 +156,40 @@ enum mouse_button{
     MOUSE_MIDDLE_BUTTON = 0x04
 };
 
+const uint16_t REPORT_ID_ACPI   = 0x0100;
+const uint16_t ACPI_WAKE_UP     = REPORT_ID_ACPI | ( 1 << 2 );
+const uint16_t ACPI_SLEEP       = REPORT_ID_ACPI | ( 1 << 1 );
+const uint16_t ACPI_POWER       = REPORT_ID_ACPI | ( 1 << 0 );
+
+const uint32_t REPORT_ID_MEDIA  = 0x02000000;
+
+const uint32_t MEDIA_EJECT              = (REPORT_ID_MEDIA | ( 1 << 23 ));
+const uint32_t MEDIA_CD_STOP            = (REPORT_ID_MEDIA | ( 1 << 22 ));
+const uint32_t MEDIA_PREV_TRACK         = (REPORT_ID_MEDIA | ( 1 << 21 ));
+const uint32_t MEDIA_NEXT_TRACK         = (REPORT_ID_MEDIA | ( 1 << 20 ));
+const uint32_t MEDIA_PLAY_OR_PAUSE      = (REPORT_ID_MEDIA | ( 1 << 19 ));
+const uint32_t MEDIA_MUTE               = (REPORT_ID_MEDIA | ( 1 << 18 )) ;
+const uint32_t MEDIA_VOLUME_REDUCE      = (REPORT_ID_MEDIA | ( 1 << 17 )) ;
+const uint32_t MEDIA_VOLUME_INCREASE    = (REPORT_ID_MEDIA | ( 1 << 16 )) ;
+const uint32_t MEDIA_REFRESH            = (REPORT_ID_MEDIA | ( 1 << 15 )) ;
+const uint32_t MEDIA_WWW_STOP           = (REPORT_ID_MEDIA | ( 1 << 14 )) ;
+const uint32_t MEDIA_WWW_FORWARD        = (REPORT_ID_MEDIA | ( 1 << 13 )) ;
+const uint32_t MEDIA_WWW_BACK           = (REPORT_ID_MEDIA | ( 1 << 12 )) ;
+const uint32_t MEDIA_WWW_HOME           = (REPORT_ID_MEDIA | ( 1 << 11 )) ;
+const uint32_t MEDIA_WWW_FAVORITES      = (REPORT_ID_MEDIA | ( 1 << 10 )) ;
+const uint32_t MEDIA_WWW_SEARCH         = (REPORT_ID_MEDIA | ( 1 << 9 )) ;
+const uint32_t MEDIA_EMail              = (REPORT_ID_MEDIA | ( 1 << 8 )) ;
+const uint32_t MEDIA_REWIND             = (REPORT_ID_MEDIA | ( 1 << 7 )) ;
+const uint32_t MEDIA_RECORD             = (REPORT_ID_MEDIA | ( 1 << 6 )) ;
+const uint32_t MEDIA_MINIMIZE           = (REPORT_ID_MEDIA | ( 1 << 5 )) ;
+const uint32_t MEDIA_MY_COMPUTER        = (REPORT_ID_MEDIA | ( 1 << 4 )) ;
+const uint32_t MEDIA_SCREEN_SAVE        = (REPORT_ID_MEDIA | ( 1 << 3 )) ;
+const uint32_t MEDIA_CALCULATOR         = (REPORT_ID_MEDIA | ( 1 << 2 )) ;
+const uint32_t MEDIA_EXPLORER           = (REPORT_ID_MEDIA | ( 1 << 1 )) ;
+const uint32_t MEDIA_MEDIA              = (REPORT_ID_MEDIA | ( 1 << 0 )) ;
+
+const uint32_t MEDIA_PLAY = MEDIA_PLAY_OR_PAUSE ;
+const uint32_t MEDIA_PAUSE = MEDIA_PLAY_OR_PAUSE ;
 
 enum chip_ver {
     V1_0 = 0x30,
