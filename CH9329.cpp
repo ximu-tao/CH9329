@@ -172,11 +172,11 @@ void CH9329::cmdSendKbGeneralData(uint8_t *key) {
  * @param uint8_t data[5]： Length must be 5
  * @return
  */
-void cmdSendMsRelData(uint8_t * data ){
+void CH9329::cmdSendMsRelData(uint8_t * data ){
     uart_fmt uartData{};
     uartData.CMD = CMD_SEND_MS_REL_DATA;
     uartData.LEN = 0x05;
-    for (int i = 0; i < data.LEN; ++i) {
+    for (int i = 0; i < uartData.LEN; ++i) {
         uartData.DATA[i] = data[i];
     }
     this->writeUart(&uartData);
@@ -208,7 +208,7 @@ uint8_t CH9329::sum(uart_fmt * data){
     for (int i = 0; i < data->LEN; ++i) {
         sum_ += data->DATA[i];
     }
-    return sum_ & 0xFF
+    return sum_ & 0xFF;
 }
 
 uart_fmt* CH9329::readUart( uart_fmt * info)  {

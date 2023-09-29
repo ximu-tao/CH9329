@@ -152,8 +152,8 @@ enum hid_code{
 
 enum mouse_button{
     MOUSE_LEFT_BUTTON = 0x01,
-    MOUSE_RIGHT_BUTTON 0x02,
-    MOUSE_MIDDLE_BUTTON 0x04,
+    MOUSE_RIGHT_BUTTON = 0x02,
+    MOUSE_MIDDLE_BUTTON = 0x04
 };
 
 
