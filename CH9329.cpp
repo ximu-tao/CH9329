@@ -206,7 +206,13 @@ uart_fmt* CH9329::readUart( uart_fmt * info)  {
 }
 
 
-void CH9329::pressASCII(uint8_t k , uint8_t control) {
+void CH9329::press(uint8_t hid_code, uint8_t control) {
+    uint8_t data[8] = {control, 0, hid_code, 0, 0, 0, 0, 0};
+    this->cmdSendKbGeneralData(data);
+    return;
+}
+
+void CH9329::pressASCII(char k , uint8_t control) {
     uint8_t data[8] = { 0 };
     data[0] = control;
     if (k >= 136) {            // it's a non-printing key (not a modifier)

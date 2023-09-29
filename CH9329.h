@@ -79,6 +79,77 @@ enum control_key {
     KEY_RIGHT_WIN = 0x80
 };
 
+enum hid_code{
+    HID_BACKSPACE = 0x2A,
+    HID_TAB = 0x2B,
+    HID_CAPSLOCK = 0x39,
+    HID_ENTER = 0x2B,
+    HID_L_SHIFT = 0xE1,
+    HID_R_SHIFT = 0xE5,
+    HID_L_CTRL = 0xE0,
+    HID_L_ALT = 0xE2,
+    HID_SPACE = 0x2C,
+    HID_R_ALT = 0xE6,
+    HID_R_CTRL = 0xE4,
+    HID_INSERT = 0x49,
+    HID_DELETE = 0x4C,
+    HID_HOME = 0x4A,
+    HID_END = 0x4D,
+    HID_LEFT_ARROW =  0x50,
+    HID_DOWN_ARROW =  0x51,
+    HID_UP_ARROW =  0x52,
+    HID_RIGHT_ARROW =  0x4F,
+    HID_PG_UP = 0x4B,
+    HID_PG_DN = 0x4E,
+    HID_NUM_LOCK = 0x53,
+    HID_KEYPAD_1 = 0x59,
+    HID_KEYPAD_END = 0x59,
+    HID_KEYPAD_2 = 0x5A,
+    HID_KEYPAD_DOWN = 0x5A,
+    HID_KEYPAD_3 = 0x5B,
+    HID_KEYPAD_PG_DN = 0x5B,
+    HID_KEYPAD_4 = 0x5C,
+    HID_KEYPAD_LEFT = 0x5C,
+    HID_KEYPAD_5 = 0x5D,
+    HID_KEYPAD_6 = 0x5E,
+    HID_KEYPAD_RIGHT = 0x5E,
+    HID_KEYPAD_7 = 0x5F,
+    HID_KEYPAD_HOME = 0x5F,
+    HID_KEYPAD_8 = 0x60,
+    HID_KEYPAD_UP = 0x60,
+    HID_KEYPAD_9 = 0x61,
+    HID_KEYPAD_PG_UP = 0x61,
+    HID_KEYPAD_0 = 0x62,
+    HID_KEYPAD_INS = 0x62,
+    HID_KEYPAD_DOT = 0x63,
+    HID_KEYPAD_DEL = 0x63,
+
+    HID_KEYPAD_ADD = 0x57,
+    HID_KEYPAD_SUB = 0x56,
+    HID_KEYPAD_MUL = 0x55,
+    HID_KEYPAD_DIV = 0x54,
+    HID_KEYPAD_ENTER = 0x58,
+
+    HID_ESC =  0x29,
+    HID_F1 =  0x3A,
+    HID_F2 =  0x3B,
+    HID_F3 =  0x3C,
+    HID_F4 =  0x3D,
+    HID_F5 =  0x3E,
+    HID_F6 =  0x3F,
+    HID_F7 =  0x40,
+    HID_F8 =  0x41,
+    HID_F9 =  0x42,
+    HID_F10 =  0x43,
+    HID_F11 =  0x44,
+    HID_F12 =  0x45,
+    HID_PRINT_SCREEN = 0x46,
+    HID_SCROLL_LOCK = 0x47,
+    HID_PAUSE = 0x48,
+    HID_L_WIN = 0xE3,
+    HID_R_WIN = 0xE7
+};
+
 
 enum chip_ver {
     V1_0 = 0x30,
@@ -119,7 +190,8 @@ private:
 public:
     CH9329(  HardwareSerial *serial , uint32_t _baud  = 9600, uint8_t addr = 0x00);
     uart_fmt * cmdGetInfo(uart_fmt * );
-    void pressASCII( uint8_t key , uint8_t control = 0 );
+    void press( uint8_t hid_code , uint8_t control = 0 );
+    void pressASCII( char key , uint8_t control = 0 );
     void releaseAll();
     void sendString(char * string , uint8_t len );
 
