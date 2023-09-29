@@ -150,6 +150,12 @@ enum hid_code{
     HID_R_WIN = 0xE7
 };
 
+enum mouse_button{
+    MOUSE_LEFT_BUTTON = 0x01,
+    MOUSE_RIGHT_BUTTON 0x02,
+    MOUSE_MIDDLE_BUTTON 0x04,
+};
+
 
 enum chip_ver {
     V1_0 = 0x30,
@@ -177,7 +183,7 @@ private:
     void cmdSendKbGeneralData(uint8_t * key );
     void cmdSendKbMediaData();
     void cmdSendMsAbsData();
-    void cmdSendMsRelData();
+    void cmdSendMsRelData(uint8_t * data );
     void cmdSendMyHidData();
     uart_fmt * cmdReadMyHidData(uart_fmt * );
     uart_fmt * cmdGetRaraCFG(uart_fmt * );
@@ -201,7 +207,11 @@ public:
     bool isNumLock();
     bool isScrollLock();
 
-
+    void mouseRelease();
+    void mouseMove( uint8_t horizontal , uint8_t vertical , uint8_t ms_key = MOUSE_LEFT_BUTTON);
+    void mouseWheel( uint8_t scale , uint8_t ms_key = MOUSE_LEFT_BUTTON);
+    void mousePress( uint8_t ms_key = MOUSE_LEFT_BUTTON );
+    void mouseClick( uint8_t ms_key = MOUSE_LEFT_BUTTON );
 };
 
 

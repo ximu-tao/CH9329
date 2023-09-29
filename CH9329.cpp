@@ -167,6 +167,23 @@ void CH9329::cmdSendKbGeneralData(uint8_t *key) {
     return ;
 }
 
+/**
+ *
+ * @param uint8_t key[8]： Length must be 5
+ * @return
+ */
+void cmdSendMsRelData(uint8_t * data ){
+    uart_fmt data{};
+    data.CMD = CMD_SEND_MS_REL_DATA;
+    data.LEN = 0x05;
+    for (int i = 0; i < data.LEN; ++i) {
+        data.DATA[i] = key[i];
+    }
+    this->writeUart(&data);
+    this->readUart( &this->_lastUartData );
+    return ;
+}
+
 void CH9329::writeUart(uart_fmt *data) {
     data->HEAD[0] = 0x57;
     data->HEAD[1] = 0xAB;
@@ -284,3 +301,30 @@ bool CH9329::isScrollLock() {
     return cmdGetInfo( &this->_lastUartData )->DATA[2] & 0x04;
 }
 
+
+void CH9329::mouseRelease() {
+    uint8_t data[5] = {1, 0, 0, 0, 0};
+    this->cmdSendMsRelData( data );
+}
+
+void CH9329::mouseMove( uint8_t horizontal , uint8_t vertical , uint8_t ms_key ){
+    uint8_t data[5] = {1, ms_key, horizontal, vertical, 0};
+    this->cmdSendMsRelData( data );
+}
+
+void CH9329::mouseWheel( uint8_t scale , uint8_t ms_key ){
+    uint8_t data[5] = {1, ms_key, 0, 0, scale};
+    this->cmdSendMsRelData( data );
+}
+
+void CH9329::mousePress( uint8_t ms_key ){
+    uint8_t data[5] = {1, ms_key, 0, 0, 0};
+    this->cmdSendMsRelData( data );
+}
+
+void CH9329::mouseClick( uint8_t ms_key ){
+    uint8_t data[5] = {1, ms_key, 0, 0, 0};
+    this->cmdSendMsRelData( data );
+    data[1] = 0;
+    this->cmdSendMsRelData( data );
+}
