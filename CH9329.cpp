@@ -334,3 +334,20 @@ void CH9329::mouseClick( uint8_t ms_key ){
     data[1] = 0;
     this->cmdSendMsRelData( data );
 }
+
+void CH9329::customizeCmd( uint8_t cmd , uint8_t * data , uint8_t len ){
+    uart_fmt uartData{};
+    uartData.CMD = cmd;
+    uartData.LEN = len;
+    for (int i = 0; i < uartData.LEN; ++i) {
+        uartData.DATA[i] = data[i];
+    }
+    this->writeUart(&uartData);
+    this->readUart( &this->_lastUartData );
+    return ;
+}
+
+
+uart_fmt * CH9329::getLastUartData(){
+    return &this->_lastUartData;
+}

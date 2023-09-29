@@ -213,6 +213,9 @@ public:
     void mouseWheel( uint8_t scale , uint8_t ms_key = MOUSE_LEFT_BUTTON);
     void mousePress( uint8_t ms_key = MOUSE_LEFT_BUTTON );
     void mouseClick( uint8_t ms_key = MOUSE_LEFT_BUTTON );
+
+    void customizeCmd( uint8_t cmd , uint8_t * data , uint8_t len);
+    uart_fmt * getLastUartData();
 };
 
 
