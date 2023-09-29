@@ -159,7 +159,7 @@ void CH9329::cmdSendKbGeneralData(uint8_t *key) {
     uart_fmt data{};
     data.CMD = CMD_SEND_KB_GENERAL_DATA;
     data.LEN = 0x08;
-    for (int i = 0; i < 8; ++i) {
+    for (int i = 0; i < data.LEN; ++i) {
         data.DATA[i] = key[i];
     }
     this->writeUart(&data);
@@ -169,17 +169,17 @@ void CH9329::cmdSendKbGeneralData(uint8_t *key) {
 
 /**
  *
- * @param uint8_t key[8]： Length must be 5
+ * @param uint8_t data[5]： Length must be 5
  * @return
  */
 void cmdSendMsRelData(uint8_t * data ){
-    uart_fmt data{};
-    data.CMD = CMD_SEND_MS_REL_DATA;
-    data.LEN = 0x05;
+    uart_fmt uartData{};
+    uartData.CMD = CMD_SEND_MS_REL_DATA;
+    uartData.LEN = 0x05;
     for (int i = 0; i < data.LEN; ++i) {
-        data.DATA[i] = key[i];
+        uartData.DATA[i] = data[i];
     }
-    this->writeUart(&data);
+    this->writeUart(&uartData);
     this->readUart( &this->_lastUartData );
     return ;
 }
