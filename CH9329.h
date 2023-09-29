@@ -196,6 +196,7 @@ private:
 public:
     CH9329(  HardwareSerial *serial , uint32_t _baud  = 9600, uint8_t addr = 0x00);
     uart_fmt * cmdGetInfo(uart_fmt * );
+    uint8_t sum(uart_fmt * );
     void press( uint8_t hid_code , uint8_t control = 0 );
     void pressASCII( char key , uint8_t control = 0 );
     void releaseAll();

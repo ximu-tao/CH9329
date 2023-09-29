@@ -189,8 +189,6 @@ void CH9329::writeUart(uart_fmt *data) {
     data->HEAD[1] = 0xAB;
     data->ADDR = this->_addr;
 
-    data->SUM = data->HEAD[0] + data->HEAD[1] + this->_addr + data->CMD + data->LEN;
-
     _serial->write( data->HEAD[0] );
     _serial->write( data->HEAD[1] );
     _serial->write( data->ADDR );
@@ -198,11 +196,19 @@ void CH9329::writeUart(uart_fmt *data) {
     _serial->write( data->LEN );
 
     for (int i = 0; i < data->LEN; ++i) {
-        data->SUM += data->DATA[i];
         _serial->write( data->DATA[i] );
     }
 
-    _serial->write( data->SUM & 0xFF );
+    _serial->write(this->sum(data));
+}
+
+uint8_t CH9329::sum(uart_fmt * data){
+    uint8_t sum_ = data->HEAD[0] + data->HEAD[1] + this->_addr + data->CMD + data->LEN;
+
+    for (int i = 0; i < data->LEN; ++i) {
+        sum_ += data->DATA[i];
+    }
+    return sum_ & 0xFF
 }
 
 uart_fmt* CH9329::readUart( uart_fmt * info)  {
