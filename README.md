@@ -78,6 +78,45 @@ ch9329.sendString( str , 23 );
  */
 ```
 
+
+#### 鼠标点击
+```c++
+void mouseClick( uint8_t ms_key = MOUSE_LEFT_BUTTON , uint8_t delay_ms = 10 );
+```
+默认点击鼠标左键，默认按下10毫秒松开。
+示例：
+```c++
+ch9329.mouseClick(); // 单击鼠标左键
+
+ch9329.mouseClick( MOUSE_MIDDLE_BUTTON ); // 单击鼠标中键
+
+ch9329.mouseClick( MOUSE_RIGHT_BUTTON , 1000 ); // 按住鼠标右键一秒后松开
+```
+
+#### 鼠标长按
+```c++
+void mousePress( uint8_t ms_key = MOUSE_LEFT_BUTTON );
+```
+#### 松开鼠标
+```c++
+void mouseRelease();
+```
+
+#### 鼠标移动（相对移动）
+```c++
+void mouseMove( uint8_t horizontal , uint8_t vertical , uint8_t ms_key = 0);
+```
+ * @param horizontal : 水平方向的相对位置， -127 ~ -1 向左移动，0 不动，1~127 向右移动
+ * @param vertical   : 垂直方向的相对位置， -127 ~ -1 向上移动，0 不动，1~127 向下移动
+ * @param ms_key     : 移动鼠标时按住鼠标按键。（使用此函数后需要调用 mouseRelease() 松开按键）
+
+#### 鼠标滚轮
+```c++
+void mouseWheel( uint8_t scale , uint8_t ms_key = 0);
+```
+ * @param scale     : 滚轮滚动齿数， -127 ~ -1 屏幕向下滚动，0 不动，1~127 屏幕向上滚动
+ * @param ms_key    : 移动鼠标时按住鼠标按键。（使用此函数后需要调用 mouseRelease() 松开按键）
+
 #### 获取主机或芯片的状态
 ```c++
 uint8_t getChipVer();  // 获取芯片版本号
@@ -88,7 +127,30 @@ bool isScrollLock(); // ScrollLock指示灯状态
 ```
 
 
-🚧 其他功能待完善
+#### 自定义命令
+```c++
+void customizeCmd( uint8_t cmd , uint8_t * data , uint8_t len);
+```
+对于未封装的命令，可使用此方法自行调用。
+
+
+示例：
+```c++
+// 发送获取当前参数配置信息命令
+ch9329.customizeCmd( CMD_GET_PARA_CFG , nullptr , 0 );
+
+// 获取最后一次命令的串口响应
+uart_fmt * data =  ch9329.getLastUartData();
+
+// 验证校验和
+if( data->SUM == ch9329.sum( data ) ){
+//    
+} else{
+//    
+}
+
+```
+
 
 #### 官方文档
 - [WCH](https://www.wch.cn/products/CH9329.html?from=list)
