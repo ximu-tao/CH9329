@@ -328,10 +328,11 @@ void CH9329::mousePress( uint8_t ms_key ){
     this->cmdSendMsRelData( data );
 }
 
-void CH9329::mouseClick( uint8_t ms_key ){
+void CH9329::mouseClick( uint8_t ms_key , uint8_t delay_ms){
     uint8_t data[5] = {1, ms_key, 0, 0, 0};
     this->cmdSendMsRelData( data );
     data[1] = 0;
+    delay(delay_ms);
     this->cmdSendMsRelData( data );
 }
 

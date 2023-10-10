@@ -243,10 +243,10 @@ public:
     bool isScrollLock();
 
     void mouseRelease();
-    void mouseMove( uint8_t horizontal , uint8_t vertical , uint8_t ms_key = MOUSE_LEFT_BUTTON);
-    void mouseWheel( uint8_t scale , uint8_t ms_key = MOUSE_LEFT_BUTTON);
+    void mouseMove( uint8_t horizontal , uint8_t vertical , uint8_t ms_key = 0);
+    void mouseWheel( uint8_t scale , uint8_t ms_key = 0);
     void mousePress( uint8_t ms_key = MOUSE_LEFT_BUTTON );
-    void mouseClick( uint8_t ms_key = MOUSE_LEFT_BUTTON );
+    void mouseClick( uint8_t ms_key = MOUSE_LEFT_BUTTON , uint8_t delay_ms = 10 );
 
     void customizeCmd( uint8_t cmd , uint8_t * data , uint8_t len);
     uart_fmt * getLastUartData();
